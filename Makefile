@@ -15,10 +15,12 @@ warehouse:
 
 pytest:
 	docker exec loader pytest -p no:warnings -v /opt/sde/test
+	
+isort:	
+	docker exec loader isort /opt/sde
 
 format:
 	docker exec loader python -m black -S --line-length 79 /opt/sde
-	docker exec loader isort /opt/sde
 
 type:
 	docker exec loader mypy --ignore-missing-imports /opt/sde
@@ -26,4 +28,4 @@ type:
 lint:
 	docker exec loader flake8 /opt/sde
 
-ci: format type lint pytest
+ci: isort format type lint pytest

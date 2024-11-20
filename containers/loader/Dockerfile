@@ -1,14 +1,21 @@
-FROM python:3.9.5
+FROM python:3.9-slim
 
-# set up location of code
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set up working directory
 WORKDIR /opt/sde/src/loader
 
 # lets us import from folders inside /src/loader directly
 ENV PYTHONPATH=/opt/sde
 
-# install python requirements
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+# Copy and install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 # COPY our code folder to docker
 COPY ../.. /opt/sde

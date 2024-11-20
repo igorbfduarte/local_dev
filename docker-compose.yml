@@ -1,5 +1,6 @@
 version: '3'
 
+name: "local_dev"
 services:
   warehouse:
     image: postgres:13
@@ -32,7 +33,7 @@ services:
       WAREHOUSE_PASSWORD: ${WAREHOUSE_PASSWORD}
       WAREHOUSE_DB: ${WAREHOUSE_DB}
       WAREHOUSE_HOST: ${WAREHOUSE_HOST}
-      WARREHOUSE_PORT: ${WAREHOUSE_PORT}
+      WAREHOUSE_PORT: ${WAREHOUSE_PORT}
     networks:
       - sde_network
 
