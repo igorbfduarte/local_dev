@@ -1,4 +1,5 @@
 import pytest
+
 from src.loader.load_user_data import load_user_data
 from utils.db import WarehouseConnection
 from utils.sde_config import get_warehouse_creds

@@ -5,25 +5,30 @@ down:
 	docker compose --env-file env down 
 
 sh:
-	docker exec -ti loader bash
+	docker exec -ti app bash
 
 run-etl:
-	docker exec loader python load_user_data.py
+	docker exec app python src/loader/load_user_data.py
+
+run-enrich:
+	docker exec app python src/transformer/enrich_user_data.py
 
 warehouse:
 	docker exec -ti warehouse psql postgres://sdeuser:sdepassword1234@localhost:5432/warehouse
 
 pytest:
-	docker exec loader pytest -p no:warnings -v /opt/sde/test
+	docker exec app pytest -p no:warnings -v /code/test
+	
+isort:	
+	docker exec app isort /code
 
 format:
-	docker exec loader python -m black -S --line-length 79 /opt/sde
-	docker exec loader isort /opt/sde
+	docker exec app python -m black -S --line-length 79 /code
 
 type:
-	docker exec loader mypy --ignore-missing-imports /opt/sde
+	docker exec app mypy --ignore-missing-imports /code
 
 lint:
-	docker exec loader flake8 /opt/sde
+	docker exec app flake8 /code
 
-ci: format type lint pytest
+ci: isort format type lint pytest
