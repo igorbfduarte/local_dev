@@ -8,17 +8,17 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Set up working directory
-WORKDIR /opt/sde/src/loader
+WORKDIR /code
 
-# lets us import from folders inside /src/loader directly
-ENV PYTHONPATH=/opt/sde
+# lets us import from folders inside /code directly
+ENV PYTHONPATH=/code
 
 # Copy and install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # COPY our code folder to docker
-COPY ../.. /opt/sde
+COPY ../.. /code/
 
 # keep our docker container running
 CMD ["tail", "-f", "/dev/null"]

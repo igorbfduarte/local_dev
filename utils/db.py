@@ -4,6 +4,7 @@ from dataclasses import dataclass
 import psycopg2
 
 
+# a data class is essencially a more robust way to build a python dictionay
 @dataclass
 class DBConnection:
     db: str
